@@ -32,8 +32,8 @@ public class SalaryService {
 
 	Employee empmodel=new Employee();
 	EmployeeDao empdao=new EmployeeDao();
-	int count=1;
-	int value=0;
+	int count=1;//no of time the method is called to run the for loop
+	int value=0;//getting the next item index of the Element Salary
 
 	public int salarydetails(Employee empmodel) throws Exception
 	{
@@ -45,13 +45,13 @@ public class SalaryService {
 
 
 		try {
-			empmodel.setSalarymodel(salarymodel);
+			empmodel.setSalarymodel(salarymodel);//set the Salary model linked with Employee model
 			DocumentBuilder builder=factory.newDocumentBuilder();
 			Document doc=builder.parse("employee.xml");
 			doc.getDocumentElement().normalize();  
 			logger.info("Root element: " + doc.getDocumentElement().getNodeName());  
 
-			NodeList salarynodeList = doc.getElementsByTagName(Tagnames.Employee);
+			NodeList salarynodeList = doc.getElementsByTagName(Tagnames.Salary);//Salary node in XML
 			for (int i = value; i < count; i++) {
 				Node s=salarynodeList.item(value);
 				logger.info(salarynodeList.getLength());
@@ -61,7 +61,7 @@ public class SalaryService {
 				{
 					Element salary=(Element)s;
 
-					NodeList yearnodelist = doc.getElementsByTagName(Tagnames.Year);
+					NodeList yearnodelist = doc.getElementsByTagName(Tagnames.Year);//Child node of the salary node
 					for(int l=0;l<salary.getElementsByTagName(Tagnames.Year).getLength();l++)
 					{
 						Node yearnode = yearnodelist.item(l);
@@ -70,10 +70,10 @@ public class SalaryService {
 							Element year=(Element) yearnode;
 							logger.info("Year  ="+year.getTagName()+" "+year.getAttribute("name"));
 
-							int yearof=Integer.parseInt(year.getAttribute("name"));
+							int yearof=Integer.parseInt(year.getAttribute("name"));//gets the attribute value of the year node
 							int numberofmonths=year.getElementsByTagName(Tagnames.Month).getLength();
 							logger.info(numberofmonths);
-							for(int j=0;j<numberofmonths;j++)
+							for(int j=0;j<numberofmonths;j++)//current no of months and amount child node present in the current year node
 							{
 								String month=year.getElementsByTagName(Tagnames.Month).item(j).getTextContent();
 								int amount=Integer.parseInt(year.getElementsByTagName(Tagnames.Amount).item(j).getTextContent().toString());
@@ -81,11 +81,11 @@ public class SalaryService {
 								logger.info(month);
 								logger.info(amount);
 
-								empmodel.getSalarymodel().setYear(yearof);
-								empmodel.getSalarymodel().setMonth(month);
-								empmodel.getSalarymodel().setAmount(amount);
+								empmodel.getSalarymodel().setYear(yearof);      //............
+								empmodel.getSalarymodel().setMonth(month);		//set the month,year,amount of the current node
+								empmodel.getSalarymodel().setAmount(amount);	//...........
 
-								salarydao.salarydetailsinsert(empmodel);
+								salarydao.salarydetailsinsert(empmodel);//......insert each value to database while simultaneously reading the XML file
 							}
 						}
 					}
@@ -95,16 +95,16 @@ public class SalaryService {
 			}
 
 
-			count++;
-			value++;
+			count++;      //gets increment the no of times the class method is called
+			value++;		//...
 		} catch (ParserConfigurationException ex) {
-			// TODO Auto-generated catch block
+			
 			logger.error("Throwing Exception in the ParserConfiguration");
 		} catch (SAXException ep) {
-			// TODO Auto-generated catch block
+			
 			logger.error("Throwing SAXException");
 		} catch (IOException ed) {
-			// TODO Auto-generated catch block
+			
 			logger.error("Throwing Input /Output Exception");
 		}catch(NullPointerException ne)
 		{

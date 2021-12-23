@@ -32,12 +32,12 @@ public class EmployeeService
 
 		int result=0;
 
-		AddressService addressclass=new AddressService();
+		AddressService addressservice=new AddressService();
 
 		Employee empmodel=new Employee();
 		EmployeeDao empdao=new EmployeeDao();
 
-		SalaryService salaryclass=new SalaryService();
+		SalaryService salaryservice=new SalaryService();
 
 		DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
 
@@ -53,16 +53,18 @@ public class EmployeeService
 			//.........................................Employee data fetch here  ...............................................................
 
 
-			NodeList nodeList = doc.getElementsByTagName(Tagnames.Employee);  
+			NodeList nodeList = doc.getElementsByTagName(Tagnames.Employee);  //gets all the Employee node in the XML
 
 
-			for (int itr = 0; itr < nodeList.getLength(); itr++)   
+			for (int itr = 0; itr < nodeList.getLength(); itr++)   // run the loop based on the no of Employee node in XML 
 			{  
 				logger.info(nodeList.getLength());
-				Node node = nodeList.item(itr);  
+				Node node = nodeList.item(itr);  // gets the Employee node based on the index e.g if the its the First employee tag its index is 0
 				logger.info("\nNode Name :" + node.getNodeName()+" "+(itr+1));  
 				if (node.getNodeType() == Node.ELEMENT_NODE)   
 				{   
+
+					// .......set and read the XmL simultaneously store it to the data...............................................
 					Element eElement = (Element) node; 
 
 					int id=Integer.parseInt(eElement.getElementsByTagName(Tagnames.Id).item(0).getTextContent());
@@ -83,6 +85,7 @@ public class EmployeeService
 
 
 					empdao.employeedetailsinsert(empmodel);
+					//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 					//....................................................................................................................
 
@@ -91,7 +94,7 @@ public class EmployeeService
 					//......................................Fetch  Address details here ...........................................................
 
 
-					addressclass.addressdetails(empmodel);
+					addressservice.addressdetails(empmodel);
 
 
 					//...............................................................................................................................					
@@ -104,7 +107,7 @@ public class EmployeeService
 					//...........................................Fetch Salary Data here..................................................
 
 
-					salaryclass.salarydetails(empmodel);
+					salaryservice.salarydetails(empmodel);
 
 					//..................................................................................................................................
 

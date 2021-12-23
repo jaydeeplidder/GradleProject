@@ -26,8 +26,8 @@ public class AddressService {
 	Address addressmodel=new Address();
 
 
-	int count=1;
-	int value=0;
+	int count=1;//no of time the method is called to run the for loop
+	int value=0;//getting the next item index of the Element Address
 	public int addressdetails(Employee empmodel) throws Exception
 	{
 
@@ -57,6 +57,8 @@ public class AddressService {
 				{   
 					Element addressElement = (Element)addressnode; 
 
+					// ..................set and read the XmL simultaneously store it to the data...............................
+
 
 					String city=addressElement.getElementsByTagName(Tagnames.City).item(0).getTextContent();
 					String country=addressElement.getElementsByTagName(Tagnames.Country).item(0).getTextContent();
@@ -75,11 +77,11 @@ public class AddressService {
 					logger.info("Pincode: "+ pincode);
 
 					addressdao.addressdetailsinsert(empmodel);
-
+					//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 				}
 			}
 			value++;
-			count++;
+			count++;//gets increment the no of times the class method is called
 		}	catch (ParserConfigurationException e) {
 
 			logger.error("Throwing Exception in the ParserConfiguration");
