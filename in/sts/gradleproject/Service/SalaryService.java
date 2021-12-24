@@ -1,15 +1,14 @@
-package in.sts.gradleproject.Service;
+package in.sts.gradleproject.service;
 
 import java.io.IOException;
 
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,6 +19,7 @@ import in.sts.gradleproject.daos.SalaryDao;
 import in.sts.gradleproject.models.Employee;
 import in.sts.gradleproject.models.Salary;
 import in.sts.gradleproject.tagnameinterface.Tagnames;
+import in.sts.gradleproject.xmlreader.Reader;
 
 //..............................READING AND STORING XML SIMULTANEOUSLY TO DATBASE.......................................................
 
@@ -39,19 +39,15 @@ public class SalaryService {
 	{
 
 		int result=0;
-		DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
+
 
 		final Logger logger=Logger.getLogger("SalaryServiceClass.class");
 
 
 		try {
 			empmodel.setSalarymodel(salarymodel);//set the Salary model linked with Employee model
-			DocumentBuilder builder=factory.newDocumentBuilder();
-			Document doc=builder.parse("employee.xml");
-			doc.getDocumentElement().normalize();  
-			logger.info("Root element: " + doc.getDocumentElement().getNodeName());  
 
-			NodeList salarynodeList = doc.getElementsByTagName(Tagnames.Salary);//Salary node in XML
+			NodeList salarynodeList =Reader.reader(Tagnames.Salary);//Salary node in XML
 			for (int i = value; i < count; i++) {
 				Node s=salarynodeList.item(value);
 				logger.info(salarynodeList.getLength());
@@ -61,7 +57,7 @@ public class SalaryService {
 				{
 					Element salary=(Element)s;
 
-					NodeList yearnodelist = doc.getElementsByTagName(Tagnames.Year);//Child node of the salary node
+					NodeList yearnodelist = salary.getElementsByTagName(Tagnames.Year);//Child node of the salary node
 					for(int l=0;l<salary.getElementsByTagName(Tagnames.Year).getLength();l++)
 					{
 						Node yearnode = yearnodelist.item(l);
@@ -98,13 +94,13 @@ public class SalaryService {
 			count++;      //gets increment the no of times the class method is called
 			value++;		//...
 		} catch (ParserConfigurationException ex) {
-			
-			logger.error("Throwing Exception in the ParserConfiguration");
+
+			logger.error("ParserConfiguration Exception occurs check your file name is proper or not?");
 		} catch (SAXException ep) {
-			
-			logger.error("Throwing SAXException");
+
+			logger.error(" SAXException occurs check your Xml file is properply wriiten or not ");
 		} catch (IOException ed) {
-			
+
 			logger.error("Throwing Input /Output Exception");
 		}catch(NullPointerException ne)
 		{

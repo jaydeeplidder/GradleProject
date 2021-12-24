@@ -1,7 +1,7 @@
 package in.sts.gradleproject.tagnameinterface;
 
 public interface Tagnames {
-	
+
 	static final String Employee="Employee";
 	static final String Id="Id";
 	static final String Firstname="FirstName";

@@ -21,18 +21,19 @@ public class SalaryDao {
 
 		final Logger logger=Logger.getLogger("SalaryDao.class");
 
-		Connection con=MysqlConnection.Connecivity();
-		PreparedStatement pstmt=null;
+		Connection con=MysqlConnection.connectivity();
+		String query="insert into Salary values(SalaryId,?,?,?,?)";
+		PreparedStatement pstmt=MysqlConnection.preparedstatement(query);
 		int result=0;
 		try
 		{
 
 
-			String query="insert into Salary values(SalaryId,?,?,?,?)";
+
 
 			if(con!=null)
 			{
-				pstmt=con.prepareStatement(query);
+
 				pstmt.setInt(1,empmodel.getId());
 				pstmt.setString(2,empmodel.getSalarymodel().getMonth());
 				pstmt.setInt(3,empmodel.getSalarymodel().getAmount());
@@ -58,17 +59,7 @@ public class SalaryDao {
 		}
 		finally
 		{
-
-			if(pstmt!=null)
-			{
-				pstmt.close();
-			}
-
-			if(con!=null)
-			{
-				con.close();
-			}
-
+			MysqlConnection.closemysqlconnection();
 
 		}
 		return result;

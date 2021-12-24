@@ -23,18 +23,19 @@ public class EmployeeDao   {
 
 		final Logger logger=Logger.getLogger("EmployeeDao.class");
 
-		Connection con=MysqlConnection.Connecivity();
-		PreparedStatement pstmt=null;
+		Connection con=MysqlConnection.connectivity();
+		String query="insert into Employee values(?,?,?)";
+		PreparedStatement pstmt=MysqlConnection.preparedstatement(query);
 		int result=0;
 		try
 		{
 
 
-			String query="insert into Employee values(?,?,?)";
+
 
 			if(con!=null)
 			{
-				pstmt=con.prepareStatement(query);
+
 				pstmt.setInt(1,empmodel.getId() );
 				pstmt.setString(2, empmodel.getFirstname());
 				pstmt.setString(3,empmodel.getLastname());
@@ -63,15 +64,7 @@ public class EmployeeDao   {
 		finally
 		{
 
-			if(pstmt!=null)
-			{
-				pstmt.close();
-			}
-
-			if(con!=null)
-			{
-				con.close();
-			}
+			MysqlConnection.closemysqlconnection();
 
 
 		}

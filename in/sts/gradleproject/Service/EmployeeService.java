@@ -1,22 +1,20 @@
-package in.sts.gradleproject.Service;
+package in.sts.gradleproject.service;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import in.sts.gradleproject.daos.EmployeeDao;
-
 import in.sts.gradleproject.models.Employee;
 import in.sts.gradleproject.tagnameinterface.Tagnames;
-
+import in.sts.gradleproject.xmlreader.Reader;
 
 import java.io.IOException;
 
@@ -39,21 +37,17 @@ public class EmployeeService
 
 		SalaryService salaryservice=new SalaryService();
 
-		DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
+
 
 		final Logger logger=Logger.getLogger("EmployeeServiceClass.class");
 		BasicConfigurator.configure();
 
 		try {
-			DocumentBuilder builder=factory.newDocumentBuilder();
-			Document doc=builder.parse("employee.xml");
-			doc.getDocumentElement().normalize();  
-			logger.info("Root element: " + doc.getDocumentElement().getNodeName());  
 
 			//.........................................Employee data fetch here  ...............................................................
 
 
-			NodeList nodeList = doc.getElementsByTagName(Tagnames.Employee);  //gets all the Employee node in the XML
+			NodeList nodeList =Reader.reader(Tagnames.Employee) ;//gets all the Employee node in the XML
 
 
 			for (int itr = 0; itr < nodeList.getLength(); itr++)   // run the loop based on the no of Employee node in XML 
@@ -124,10 +118,10 @@ public class EmployeeService
 
 		} catch (ParserConfigurationException e) {
 
-			logger.error("Throwing Exception in the ParserConfiguration");
+			logger.error("ParserConfiguration Exception occurs check your file name is proper or not?");
 		} catch (SAXException e) {
 
-			logger.error("Throwing SAXException");
+			logger.error(" SAXException occurs check your Xml file is properply wriiten or not ");
 		} catch (IOException e) {
 
 			logger.error("Throwing Input /Output Exception");

@@ -11,25 +11,26 @@ import in.sts.gradleproject.models.Employee;
 import in.sts.gradleproject.mysqlconnection.MysqlConnection;
 
 public class AddressDao {
-
+	final Logger logger=Logger.getLogger("AddressDao.class");
 	public int addressdetailsinsert(Employee empmodel) throws Exception
 	{
 
 
-		final Logger logger=Logger.getLogger("AddressDao.class");
 
-		Connection con=MysqlConnection.Connecivity();
-		PreparedStatement pstmt=null;
+
+		Connection con=MysqlConnection.connectivity();
+		String query="insert into Address values(AddressId,?,?,?,?)";
+
+		PreparedStatement pstmt=MysqlConnection.preparedstatement(query);;
 		int result=0;
 		try
 		{
 
 
-			String query="insert into Address values(AddressId,?,?,?,?)";
 
 			if(con!=null)
 			{
-				pstmt=con.prepareStatement(query);
+
 				pstmt.setInt(1,empmodel.getId());
 				pstmt.setString(2,empmodel.getAddressmodel().getCity());
 				pstmt.setString(3,empmodel.getAddressmodel().getCountry());
@@ -57,15 +58,7 @@ public class AddressDao {
 		finally
 		{
 
-			if(pstmt!=null)
-			{
-				pstmt.close();
-			}
-
-			if(con!=null)
-			{
-				con.close();
-			}
+			MysqlConnection.closemysqlconnection();
 
 
 		}

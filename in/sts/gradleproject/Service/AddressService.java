@@ -1,14 +1,13 @@
-package in.sts.gradleproject.Service;
+package in.sts.gradleproject.service;
 
 import java.io.IOException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,6 +17,7 @@ import in.sts.gradleproject.daos.AddressDao;
 import in.sts.gradleproject.models.Address;
 import in.sts.gradleproject.models.Employee;
 import in.sts.gradleproject.tagnameinterface.Tagnames;
+import in.sts.gradleproject.xmlreader.Reader;
 
 //..............................READING AND STORING XML SIMULTANEOUSLY TO DATBASE.......................................................
 
@@ -39,13 +39,8 @@ public class AddressService {
 
 
 		try {
-			DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder=factory.newDocumentBuilder();
-			Document doc=builder.parse("employee.xml");
-			doc.getDocumentElement().normalize();  
-			logger.info("Root element: " + doc.getDocumentElement().getNodeName());  
 
-			NodeList addressnodeList = doc.getElementsByTagName(Tagnames.Employee);  
+			NodeList addressnodeList = Reader.reader(Tagnames.Employee) ;
 
 
 			for (int k = value; k <count ; k++)   
@@ -84,10 +79,10 @@ public class AddressService {
 			count++;//gets increment the no of times the class method is called
 		}	catch (ParserConfigurationException e) {
 
-			logger.error("Throwing Exception in the ParserConfiguration");
+			logger.error("ParserConfiguration Exception occurs check your file name is proper or not?");
 		} catch (SAXException e) {
 
-			logger.error("Throwing SAXException");
+			logger.error(" SAXException occurs check your Xml file is properply wriiten or not ");
 		} catch (IOException e) {
 
 			logger.error("Throwing Input /Output Exception");

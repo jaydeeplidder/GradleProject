@@ -1,6 +1,6 @@
 package in.sts.gradleproject.main;
 
-import in.sts.gradleproject.Service.EmployeeService;
+import in.sts.gradleproject.service.EmployeeService;
 
 public class Main {
 
