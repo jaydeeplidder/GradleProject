@@ -15,16 +15,16 @@ import in.sts.gradleproject.mysqlconnection.MysqlConnection;
 
 public class EmployeeDao   {
 
+	final Logger logger=Logger.getLogger("EmployeeDao.class");
 
-
-	public int employeedetailsinsert(Employee empmodel) throws Exception
+	public int employeedetailsInsert(Employee empmodel) throws Exception
 	{
 
 
-		final Logger logger=Logger.getLogger("EmployeeDao.class");
+		
 
 		Connection con=MysqlConnection.connectivity();
-		String query="insert into Employee values(?,?,?)";
+		String query="insert into Employee values(?,?,?,?,?)";
 		PreparedStatement pstmt=MysqlConnection.preparedstatement(query);
 		int result=0;
 		try
@@ -39,6 +39,8 @@ public class EmployeeDao   {
 				pstmt.setInt(1,empmodel.getId() );
 				pstmt.setString(2, empmodel.getFirstname());
 				pstmt.setString(3,empmodel.getLastname());
+				pstmt.setString(4,empmodel.getDesignation());
+				pstmt.setInt(5,empmodel.getReportingto());
 
 
 
@@ -64,7 +66,7 @@ public class EmployeeDao   {
 		finally
 		{
 
-			MysqlConnection.closemysqlconnection();
+			MysqlConnection.closeMysqlconnection();
 
 
 		}

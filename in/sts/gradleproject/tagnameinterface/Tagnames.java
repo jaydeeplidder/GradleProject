@@ -14,5 +14,7 @@ public interface Tagnames {
 	static final String Month="Month";
 	static final String Amount="Amount";
 	static final String Year="Year";
+	static final String Reportingto="reportingto";
+	static final String Designation="designation";
 	
 }

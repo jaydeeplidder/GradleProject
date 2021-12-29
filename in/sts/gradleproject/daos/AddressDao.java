@@ -12,7 +12,7 @@ import in.sts.gradleproject.mysqlconnection.MysqlConnection;
 
 public class AddressDao {
 	final Logger logger=Logger.getLogger("AddressDao.class");
-	public int addressdetailsinsert(Employee empmodel) throws Exception
+	public int addressdetailsInsert(Employee empmodel) throws Exception
 	{
 
 
@@ -58,7 +58,7 @@ public class AddressDao {
 		finally
 		{
 
-			MysqlConnection.closemysqlconnection();
+			MysqlConnection.closeMysqlconnection();
 
 
 		}

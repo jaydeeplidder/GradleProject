@@ -12,14 +12,15 @@ import in.sts.gradleproject.models.Salary;
 import in.sts.gradleproject.mysqlconnection.MysqlConnection;
 
 public class SalaryDao {
-
+	
+	final Logger logger=Logger.getLogger("SalaryDao.class");
 	Salary salarymodel=new Salary();
 
-	public int salarydetailsinsert(Employee empmodel) throws Exception
+	public int salarydetailsInsert(Employee empmodel) throws Exception
 	{
 
 
-		final Logger logger=Logger.getLogger("SalaryDao.class");
+		
 
 		Connection con=MysqlConnection.connectivity();
 		String query="insert into Salary values(SalaryId,?,?,?,?)";
@@ -59,7 +60,7 @@ public class SalaryDao {
 		}
 		finally
 		{
-			MysqlConnection.closemysqlconnection();
+			MysqlConnection.closeMysqlconnection();
 
 		}
 		return result;
